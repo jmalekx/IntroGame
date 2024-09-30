@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     private int numPickups = 3; //number of pickups we have
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI winText;
+    public TextMeshProUGUI playerPosition;
+    public TextMeshProUGUI playerVelocity;
+    private Vector3 oldPosition;
+    private Vector3 velocity;
 
 
     void Start()
@@ -22,6 +26,9 @@ public class PlayerController : MonoBehaviour
         count = 0;
         winText.text = "";
         SetCountText();
+        SetPlayerPositionText();
+        SetPlayerVelocityText();
+        oldPosition = transform.position;
     }
     void OnMove(InputValue value)
     {
@@ -33,6 +40,10 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(moveValue.x, 0.0f, moveValue.y);
 
         GetComponent<Rigidbody>().AddForce(movement * speed * Time.fixedDeltaTime);
+        velocity = (transform.position - oldPosition) / Time.deltaTime;
+
+        SetPlayerPositionText();
+        SetPlayerVelocityText();
     }
 
     void OnTriggerEnter(Collider other)
@@ -54,4 +65,17 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    private void SetPlayerPositionText()
+    {
+        playerPosition.text = "Position: " + transform.position.ToString();
+    }
+
+    private void SetPlayerVelocityText(){
+        playerVelocity.text = "Velocity: " + velocity.magnitude.ToString();
+
+    }
+
+
+
 }
