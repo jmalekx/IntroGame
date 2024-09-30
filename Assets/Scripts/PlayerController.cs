@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.InputSystem;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
@@ -9,7 +9,7 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
 
-    //public Vector2 moveValue;
+    public Vector2 moveValue;
     public float speed;
     private int count;
     private int numPickups = 3; //number of pickups we have
@@ -23,16 +23,16 @@ public class PlayerController : MonoBehaviour
         winText.text = "";
         SetCountText();
     }
-    //void OnMove(InputValue value)
-    //{
-    //    moveValue = value.Get<Vector2>();
-    //}
+    void OnMove(InputValue value)
+    {
+        moveValue = value.Get<Vector2>();
+    }
 
     void FixedUpdate()
     {
-    //    Vector3 movement = new Vector3(moveValue.x, 0.0f, moveValue.y);
+        Vector3 movement = new Vector3(moveValue.x, 0.0f, moveValue.y);
 
-    //    GetComponent<Rigidbody>().AddForce(movement * speed * Time.fixedDeltaTime);
+        GetComponent<Rigidbody>().AddForce(movement * speed * Time.fixedDeltaTime);
     }
 
     void OnTriggerEnter(Collider other)
